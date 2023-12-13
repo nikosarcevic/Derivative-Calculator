@@ -1,3 +1,19 @@
+
+
+***
+## Table of contents
+- [Derivative Calculator](#derivative-calculator)
+  * [Basic information and motivation](#basic-information-and-motivation)
+  * [The Power of Stem Method](#the-power-of-stem-method)
+  * [Features](#features)
+  * [Installation](#installation)
+  * [Usage](#usage)
+  * [Contributing](#contributing)
+  * [License](#license)
+  * [Thanks](#thanks)
+
+
+***
 # Derivative Calculator
 
 ## Basic information and motivation
