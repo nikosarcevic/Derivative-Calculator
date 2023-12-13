@@ -102,4 +102,4 @@ MIT License
 
 # Thanks
 
-Thank you to Stefano Camera for the method, and Matthijs van der Wild and Marco Bonici for useful discussion.
+Thank you to Stefano Camera for the method, and Matthijs van der Wild and Marco Bonici for useful discussions and tips.
