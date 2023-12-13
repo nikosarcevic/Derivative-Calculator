@@ -175,6 +175,8 @@ class DerivativeCalculator:
         plt.rcParams['ytick.direction'] = 'in'
         plt.rcParams['legend.fontsize'] = 20
         plt.rcParams['axes.labelsize'] = 20
+        plt.rcParams['xtick.labelsize'] = 15  # Set x-tick label font size
+        plt.rcParams['ytick.labelsize'] = 15
 
         # Calculate derivative using numdifftools
         nd_derivative = nd.Derivative(self.myfunc)(self.x_center)
