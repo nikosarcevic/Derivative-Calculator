@@ -1,13 +1,25 @@
 # Derivative Calculator
 
-This Python module provides a DerivativeCalculator class, designed for calculating the derivative of a given function at a specified point using different methods. It includes implementations of the stem method and the five-point stencil method, as well as capabilities for handling output noise and visualizing the results.
+The DerivativeCalculator class in this Python module is specifically tailored for accurately computing the derivative of complex functions at a designated point, utilizing a variety of methods. It features the **stem method** and **five-point stencil method**, along with tools for managing output noise and graphically representing the outcomes.
+
+The inception of this code is rooted in addressing challenges in calculating derivatives within Fisher forecasting analysis. Given the intricate nature of the functions involved, often accompanied by substantial noise, precise derivative computation becomes critical. The complexity of these functions, coupled with the difficulty in determining ideal derivative step sizes for various cosmological parameters, significantly impacts the stability of [Fisher matrices](https://en.wikipedia.org/wiki/Fisher_information). Traditional finite methods like the [five-point stencil](https://en.wikipedia.org/wiki/Five-point_stencil) or [numdifftools](https://numdifftools.readthedocs.io/en/master/) inadequate in such scenarios.
+
+The stem method emerges as a robust alternative, particularly effective when the original function is complex and sensitive to minor parameter adjustments. This sensitivity typically leads to high variability in the derivatives with respect to each parameter, especially when small changes are evaluated. To address this, determining a bespoke and optimal step size for each parameter's derivative is essential. Alternatively, the stem method provides a practical solution to these challenges.
+
+# The Power of Stem Method
+
 
 # Features
 
-Stem Method: Implements the stem derivative calculation based on the method developed by Camera et al.
-Five-Point Stencil Method: Provides a numerical differentiation using the five-point stencil method.
-Handling Output Noise: Includes functionality for adding Gaussian noise to the function output and calculating derivatives with this noise.
-Visualization Tools: Methods for plotting derivative distributions and demonstrating the stem method with noisy data.
+**Stem Method**: Implements the stem derivative calculation based on the method developed by Camera et al.
+This method is described in detail in *"SKA Weak Lensing III: Added Value of Multi-Wavelength Synergies for the Mitigation of Systematics"* ([see arXiv:1606.03451
+](https://arxiv.org/abs/1606.03451)).
+
+**Five-Point Stencil Method**: Provides a numerical differentiation using the five-point stencil method (for more details check [Wikipedia](https://en.wikipedia.org/wiki/Five-point_stencil), for example).
+
+**Handling Output Noise**: Includes functionality for adding Gaussian noise to the function output and calculating derivatives with this noise.
+
+**Visualization Tools**: Methods for plotting derivative distributions and demonstrating the stem method with noisy data.
 
 # Installation
 
