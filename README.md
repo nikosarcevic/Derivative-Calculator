@@ -40,15 +40,13 @@ To use the DerivativeCalculator, you need to have Python installed along with th
 You can install these dependencies using pip:
 
 bash
-Copy code
-`pip install numpy matplotlib seaborn numdifftools scipy`
+```pip install numpy matplotlib seaborn numdifftools scipy```
 
 #Usage
 
 Here is a basic example of how to use the DerivativeCalculator:
 
 python
-Copy code
 ```
 import numpy as np
 from derivative_calculator import DerivativeCalculator
