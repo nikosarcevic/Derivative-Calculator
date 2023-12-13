@@ -1,8 +1,8 @@
-Derivative Calculator
+# Derivative Calculator
 
 This Python module provides a DerivativeCalculator class, designed for calculating the derivative of a given function at a specified point using different methods. It includes implementations of the stem method and the five-point stencil method, as well as capabilities for handling output noise and visualizing the results.
 
-Features
+# Features
 
 Stem Method: Implements the stem derivative calculation based on the method developed by Camera et al.
 Five-Point Stencil Method: Provides a numerical differentiation using the five-point stencil method.
@@ -31,24 +31,24 @@ Copy code
 import numpy as np
 from derivative_calculator import DerivativeCalculator
 
-# Define your function
+## Define your function
 def my_function(x):
     return np.sin(x)
 
-# Create an instance of the DerivativeCalculator
+## Create an instance of the DerivativeCalculator
 calc = DerivativeCalculator(myfunc=my_function, x_center=np.pi/4)
 
-# Calculate the derivative using the stem method
+## Calculate the derivative using the stem method
 stem_derivative = calc.stem_method()
 print("Stem Method Derivative:", stem_derivative)
 
-# Calculate the derivative using the five-point stencil method
+## Calculate the derivative using the five-point stencil method
 stencil_derivative = calc.five_point_stencil_method()
 print("Five-Point Stencil Derivative:", stencil_derivative)
 Contributing
 
 Contributions to improve DerivativeCalculator are welcome. Please ensure to follow the code standards and add unit tests for any new features.
 
-License
+# License
 
 MIT License
