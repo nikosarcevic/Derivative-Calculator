@@ -8,6 +8,13 @@ The stem method emerges as a robust alternative, particularly effective when the
 
 # The Power of Stem Method
 
+The power of stem method lies in the fact that the derivative is obtained as follows:
+ - first, the function is evaluated at a central value and several more values (arbitrary choice. We are following values given in Stamera et al.)
+ - these values are collected in an array (or a list) and then a linear fit is performed
+ - the derivative is then the slope of the linear function
+A visual demonstration can be seen in figure:
+
+![A showcase of the idea behind the stem method: function is evaluated multiple times, each value (purple scatter) is plotted and then linearly fitted (green line). The derivative is then the slope of the linear function.](/plots/stem_demonstration.png)
 
 # Features
 
