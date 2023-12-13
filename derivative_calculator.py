@@ -204,8 +204,11 @@ class DerivativeCalculator:
         plt.xlabel("Derivative")
         plt.ylabel("Frequency")
         plt.legend(frameon=False, loc='upper left')
-
+        # Adjust layout to ensure everything fits without clipping
         plt.tight_layout()
+        # Save the figure
+        plt.savefig("derivation_comparison_hist.png", dpi=300)
+
         plt.show()
 
 
@@ -247,6 +250,10 @@ class DerivativeCalculator:
         plt.legend(fontsize=12, frameon=False)
         plt.xticks(fontsize=10)  # Adjust the font size for x-axis tick labels as needed
         plt.yticks(fontsize=10)
+        # Adjust layout to ensure everything fits without clipping
+        plt.tight_layout()
+        # Save the figure
+        plt.savefig("stem_demonstration.png", dpi=300)
 
         plt.show()
 
@@ -343,6 +350,9 @@ class DerivativeCalculator:
         stencil_variance = np.var(stencil_derivatives)
 
         axes[1].set_xlabel('Derivative', fontsize=12)
-
+        # Adjust layout to ensure everything fits without clipping
         plt.tight_layout()
+        # Save the figure
+        plt.savefig("derivation_comparison_boxplot.png", dpi=300)
+
         plt.show()
