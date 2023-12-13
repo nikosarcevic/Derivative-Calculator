@@ -23,6 +23,7 @@ Derivative value evaluation using the stem method, compared to a finite differen
 Alternative way of demonstrating the difference in variance of the distribution of the derivatives for a five point stencil and stem method is a box plot:
 ![Box plots for five point stencil (top) and stem methods (bottom) for a cubic function with gaussian noise.](/plots/derivation_comparison_boxplot.png)
 
+[!NOTE]
 Note that this implementation of the stem method routine is very simple and basic. Secondly, some choices (for example, the value of the deviations from the central value, the limit of the maximum spread, etc.) are arbitrary. It can be changed or improved depending on the purpose and the framework where it will be implemented.
 
 # Features
