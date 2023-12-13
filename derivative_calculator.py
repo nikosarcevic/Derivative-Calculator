@@ -15,6 +15,7 @@ class DerivativeCalculator:
         Parameters:
         myfunc (callable): The function whose derivative is to be calculated.
         x_center (float): The central value at which the derivative is evaluated.
+        dx (float): The step size for derivative calculation.
         iterations (int): Number of iterations for derivative calculation.
         min_samples (int): Minimum number of samples to retain while adjusting the range.
         """
@@ -49,6 +50,8 @@ class DerivativeCalculator:
         """
 
         # The percentage values to use for the stem method
+        # Note that this is an arbitrary choice and the values
+        # can be changed as needed
         percentages = [0.00625, 0.0125, 0.01875, 0.025, 0.0375, 0.05,
                        0.1]  # 0.625%, 1.25%, 1.875%, 2.5%, 3.75%, 5%, 10%
         stem_deriv = []  # List to store the stem derivative
@@ -72,6 +75,8 @@ class DerivativeCalculator:
             max_spread = np.max(spread)
 
             # If the spread is small enough, return the slope as the derivative
+            # Also note that this criterium is an arbitrary choice
+            # and the value can be changed as needed
             if max_spread < 0.01:
                 stem_deriv.append(slope)
                 break
