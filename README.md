@@ -79,3 +79,7 @@ Contributions to improve DerivativeCalculator are welcome. Please ensure to foll
 # License
 
 MIT License
+
+# Thanks
+
+Thank you to Stefano Camera for the method, and Matthijs van der Wild and Marco Bonici for useful discussion.
