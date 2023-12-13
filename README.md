@@ -1,5 +1,7 @@
 # Derivative Calculator
 
+## Basic information and motivation
+
 The DerivativeCalculator class in this Python module is specifically tailored for accurately computing the derivative of complex functions at a designated point, utilizing the **stem method** explained in Stamera et al. 2016 *"SKA Weak Lensing III: Added Value of Multi-Wavelength Synergies for the Mitigation of Systematics"* ([see arXiv:1606.03451
 ](https://arxiv.org/abs/1606.03451)). It also features a five-point stencil method (used to showcase the superorority of the stem method), along with tools for demonstrating the method visually.
 
@@ -7,7 +9,7 @@ The motivation behind this code is rooted in addressing challenges in calculatin
 
 The stem method emerges as a robust alternative, particularly effective when the original function is complex and sensitive to minor parameter adjustments. This sensitivity typically leads to high variability in the derivatives with respect to each parameter, especially when small changes are evaluated. To address this, determining a bespoke and optimal step size for each parameter's derivative is essential. Alternatively, the stem method provides a practical solution to these challenges.
 
-# The Power of Stem Method
+## The Power of Stem Method
 
 The power of stem method lies in the fact that the derivative is obtained as follows:
  - first, the function is evaluated at a central value and several more values (arbitrary choice. We are following values given in Stamera et al.)
@@ -26,7 +28,7 @@ Alternative way of demonstrating the difference in variance of the distribution 
 > [!NOTE]
 > Note that this implementation of the stem method routine is very simple and basic. Secondly, some choices (for example, the value of the deviations from the central value, the limit of the maximum spread, etc.) are arbitrary. It can be changed or improved depending on the purpose and the framework where it will be implemented.
 
-# Features
+## Features
 
 **Stem Method**: Implements the stem derivative calculation based on the method developed by Camera et al.
 This method is described in detail in *"SKA Weak Lensing III: Added Value of Multi-Wavelength Synergies for the Mitigation of Systematics"* ([see arXiv:1606.03451
@@ -38,7 +40,7 @@ This method is described in detail in *"SKA Weak Lensing III: Added Value of Mul
 
 **Visualization Tools**: Methods for plotting derivative distributions and demonstrating the stem method with noisy data.
 
-# Installation
+## Installation
 
 To use the DerivativeCalculator, you need to have Python installed along with the following libraries:
 
@@ -53,7 +55,7 @@ You can install these dependencies using pip:
 bash
 ```pip install numpy matplotlib seaborn numdifftools scipy```
 
-# Usage
+## Usage
 
 Here is a basic example of how to use the DerivativeCalculator:
 
@@ -86,11 +88,11 @@ stencil_derivative = calc.five_point_stencil_method()
 print("Five-Point Stencil Derivative:", stencil_derivative)
 ```
 
-# Contributing
+## Contributing
 
 Contributions to improve DerivativeCalculator are welcome. Please ensure to follow the code standards and add unit tests for any new features.
 
-# License
+## License
 
 MIT License
 
