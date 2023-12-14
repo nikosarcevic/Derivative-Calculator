@@ -1,0 +1,70 @@
+[build-system]
+requires = [
+    "hatchling>=1.13.0",
+    "hatch-vcs>=0.3.0",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "derivative-calculator"
+dynamic = ["version"]
+description = "Compute the derivative of functions at a designated point with the stem method"
+readme = "README.md"
+license = { text = "MIT" }  # SPDX short identifier
+requires-python = ">=3.8"
+authors = [ {name = "Nikolina Sarcevic", email = "n.sarcevic2@newcastle.ac.uk"} ]
+maintainers = [ {name = "Nikolina Sarcevic", email = "n.sarcevic2@newcastle.ac.uk"} ]
+keywords = [
+    "derivative",
+    "stem",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "seaborn>=0.12.0", # requires matplotlib, scipy, numpy
+    "numdifftools>=0.9.40",
+    "matplotlib", # compatible versions controlled through seaborn
+    "scipy",  # compatible versions controlled through matplotlib
+    "numpy",  # compatible versions controlled through scipy
+]
+
+[project.urls]
+Documentation = "https://github.com/nikosarcevic/Derivative-Calculator"
+Homepage = "https://github.com/nikosarcevic/Derivative-Calculator"
+"Issue Tracker" = "https://github.com/nikosarcevic/Derivative-Calculator/issues"
+"Releases" = "https://github.com/nikosarcevic/Derivative-Calculator/releases"
+"Source Code" = "https://github.com/nikosarcevic/Derivative-Calculator"
+
+[project.optional-dependencies]
+# Developer extras
+test = [
+    "pytest>=6.0",
+    "coverage[toml]>=6.0.0",
+    "pytest-mpl",
+]
+
+[tool.hatch.version]
+source = "vcs"
+
+[tool.hatch.version.raw-options]
+local_scheme = "no-local-version"
+
+[tool.hatch.build.hooks.vcs]
+version-file = "src/derivative_calculator/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/derivative_calculator"]
