@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import numdifftools as nd
 import numpy as np
-import scipy as sp
-import seaborn as sns
 
 
 __all__ = ["DerivativeCalculator"]
