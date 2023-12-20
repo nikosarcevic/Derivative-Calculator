@@ -18,7 +18,7 @@
 
 ## Basic information and motivation
 
-The DerivativeCalculator class in this Python module is specifically tailored for accurately computing the derivative of functions at a designated point, utilizing the **stem method** explained in Stamera et al. 2016 *"SKA Weak Lensing III: Added Value of Multi-Wavelength Synergies for the Mitigation of Systematics"* ([see arXiv:1606.03451
+The DerivativeCalculator class in this Python module is specifically tailored for accurately computing the derivative of functions at a designated point, utilizing the **stem method** explained in Camera et al. 2016 *"SKA Weak Lensing III: Added Value of Multi-Wavelength Synergies for the Mitigation of Systematics"* ([see arXiv:1606.03451
 ](https://arxiv.org/abs/1606.03451)). It also features a five-point stencil method (used to showcase the superorority of the stem method), along with tools for demonstrating the method visually.
 
 The motivation behind this code is rooted in addressing challenges in calculating derivatives within Fisher forecasting analysis (or any other occurance where the sability of numerical derivatives is central). Given the intricate nature of the functions involved, often accompanied by substantial noise, precise derivative computation becomes critical. The complexity of these functions, coupled with the difficulty in determining ideal derivative step sizes for various cosmological parameters, significantly impacts the stability of [Fisher matrices](https://en.wikipedia.org/wiki/Fisher_information). Traditional finite difference methods like the [five-point stencil](https://en.wikipedia.org/wiki/Five-point_stencil) or [numdifftools](https://numdifftools.readthedocs.io/en/master/) inadequate in such scenarios.
@@ -28,7 +28,7 @@ The stem method emerges as a robust alternative, particularly effective when the
 ## The Power of Stem Method
 
 The power of stem method lies in the fact that the derivative is obtained as follows:
- - first, the function is evaluated at a central value and several more values (arbitrary choice. We are following values given in Stamera et al.)
+ - first, the function is evaluated at a central value and several more values (arbitrary choice. We are following values given in Camera et al.)
  - these values are collected in an array (or a list) and then a linear fit is performed
  - if the slope is more than desired precision (for example, more than 10%), the outer points are "clipped off" and fitting is done again
  - this is done until the desired precision is met
