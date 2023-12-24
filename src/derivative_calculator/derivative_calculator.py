@@ -1,9 +1,13 @@
 import matplotlib.pyplot as plt
 import numdifftools as nd
 import numpy as np
-import scipy as sp
-import seaborn as sns
 
+
+__all__ = ["DerivativeCalculator"]
+
+
+def __dir__():
+    return __all__
 
 class DerivativeCalculator:
     def __init__(self, myfunc, x_center, dx=0.01, min_samples=5):

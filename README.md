@@ -64,18 +64,11 @@ This method is described in detail in *"SKA Weak Lensing III: Added Value of Mul
 
 ## Installation
 
-To use the DerivativeCalculator, you need to have Python installed along with the following libraries:
+To use the DerivativeCalculator, you need to have Python installed, and then you can install from this repository source with `pip`
 
-- NumPy
-- Matplotlib
-- Seaborn
-- Numdifftools
-- SciPy
-
-You can install these dependencies using pip:
-
-bash
-```pip install numpy matplotlib seaborn numdifftools scipy```
+```
+python -m pip install .
+```
 
 ## Usage
 
