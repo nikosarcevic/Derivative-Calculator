@@ -8,9 +8,9 @@
   * [Features](#features)
   * [Installation](#installation)
   * [Usage](#usage)
-  * [Contributing](#contributing)
   * [License](#license)
-  * [Thanks](#thanks)
+  * [Contributors and Thanks](#contributors-and-thanks)
+  * [Contributing](#contributing)
 
 
 ***
@@ -110,14 +110,16 @@ stencil_derivative = calc.five_point_stencil_method()
 print("Five-Point Stencil Derivative:", stencil_derivative)
 ```
 
-## Contributing
-
-Contributions to improve DerivativeCalculator are welcome. Please ensure to follow the code standards and add unit tests for any new features.
-
 ## License
 
 MIT License
 
-# Contributors and Thanks
+## Contributors and Thanks
+
 This repository is maintained by Niko Sarcevic and Matthijs van der Wild.
 Thank you to Stefano Camera for the method, and Matthijs van der Wild and Marco Bonici for useful discussions and tips.
+
+
+## Contributing
+
+Contributions to improve DerivativeCalculator are welcome. Please ensure to follow the code standards and add unit tests for any new features.
