@@ -118,6 +118,6 @@ Contributions to improve DerivativeCalculator are welcome. Please ensure to foll
 
 MIT License
 
-# Thanks
-
+# Contributors and Thanks
+This repository is maintained by Niko Sarcevic and Matthijs van der Wild.
 Thank you to Stefano Camera for the method, and Matthijs van der Wild and Marco Bonici for useful discussions and tips.
