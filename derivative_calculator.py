@@ -49,11 +49,19 @@ class DerivativeCalculator:
         tuple: the stem derivative.
         """
 
-        # The percentage values to use for the stem method
+        # The percentage offset values to use for the stem method
         # Note that this is an arbitrary choice and the values
         # can be changed as needed
-        percentages = [0.00625, 0.0125, 0.01875, 0.025, 0.0375, 0.05,
-                       0.1]  # 0.625%, 1.25%, 1.875%, 2.5%, 3.75%, 5%, 10%
+        percentages = [
+            0.,         # 0%
+            0.00625,    # 0.625%
+            0.0125,     # 1.25%
+            0.01875,    # 1.875%
+            0.025,      # 2.5%
+            0.0375,     # 3.75%
+            0.05,       # 5%
+            0.1         # 10%
+        ]
         stem_deriv = []  # List to store the stem derivative
 
         # Use a fixed range around zero for x values if the central value is zero
