@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import numdifftools as nd
 import numpy as np
-import scipy as sp
-import seaborn as sns
 
 
 class DerivativeCalculator:
@@ -26,7 +24,7 @@ class DerivativeCalculator:
         self.stem_deriv = None
 
 
-    def stem_method(self):
+    def stem_method(self, include_zero=True):
         """
         Calculates the stem derivative of a function at a given central value.
 
@@ -49,51 +47,44 @@ class DerivativeCalculator:
         tuple: the stem derivative.
         """
 
-        # The percentage offset values to use for the stem method
-        # Note that this is an arbitrary choice and the values
-        # can be changed as needed
-        percentages = [
-            0.,         # 0%
-            0.00625,    # 0.625%
-            0.0125,     # 1.25%
-            0.01875,    # 1.875%
-            0.025,      # 2.5%
-            0.0375,     # 3.75%
-            0.05,       # 5%
-            0.1         # 10%
-        ]
-        stem_deriv = []  # List to store the stem derivative
+        # Define percentage offsets, with optional 0% offset
+        percentages = [0.00625, 0.0125, 0.01875, 0.025, 0.0375, 0.05, 0.1]
+        if include_zero:
+            percentages = [0.] + percentages
 
-        # Use a fixed range around zero for x values if the central value is zero
+        stem_deriv = []  # Store the stem derivative values
+
+        # Generate x values depending on whether x_center is zero
         if self.x_center == 0:
-            x_values = np.array([p for p in percentages]
-                                + [-p for p in percentages])
-        # Use a fixed range around the central value for x values otherwise
+            x_values = np.array([p for p in percentages] + [-p for p in percentages])
         else:
-            x_values = np.array([self.x_center * (1 + p) for p in percentages]
-                                + [self.x_center * (1 - p) for p in percentages])
-        # Evaluate the function at these x values
+            x_values = np.array([self.x_center * (1 + p) for p in percentages] +
+                                [self.x_center * (1 - p) for p in percentages])
+
+        # Evaluate function values safely
         y_values = np.stack([self.myfunc(x) for x in x_values], axis=0)
 
         # Fit a line to the data points and calculate the spread
         while len(x_values) >= self.min_samples:
             slope, intercept = np.polyfit(x_values, y_values, 1)
             y_fitted = slope * x_values + intercept
-            spread = np.abs((y_fitted - y_values) / y_values)
+
+            # Avoid division by zero
+            safe_y = np.where(y_values == 0, 1e-10, y_values)
+            spread = np.abs((y_fitted - y_values) / safe_y)
             max_spread = np.max(spread)
 
             # If the spread is small enough, return the slope as the derivative
-            # Also note that this criterium is an arbitrary choice
+            # Also note that these criteria is an arbitrary choice
             # and the value can be changed as needed
             if max_spread < 0.01:
                 stem_deriv.append(slope)
                 break
-            # Otherwise, remove the outlier point with the maximum spread
             else:
                 x_values = x_values[1:-1]
-                y_values = y_values[1:-1]
+                y_values = np.stack([self.myfunc(x) for x in x_values], axis=0)
 
-        return stem_deriv[0] if stem_deriv else 0  # Or return None
+        return float(stem_deriv[0]) if stem_deriv else 0.0 # Or return None
 
     def five_point_stencil_method(self):
         """
@@ -120,7 +111,7 @@ class DerivativeCalculator:
         # Calculate the derivative using the stencil coefficients
         derivative = np.dot(stencil_coeffs, function_values)
 
-        return derivative
+        return float(derivative)
 
     def calculate_derivatives_with_output_noise(self, method='stem', iterations=100, noise_std=0.01):
         """
@@ -307,7 +298,7 @@ class DerivativeCalculator:
             spread = np.abs((y_fitted - y_values) / y_values)
             max_spread = np.max(spread)
 
-        return slope, intercept, max_spread
+        return float(slope), float(intercept), float(max_spread)
 
     def plot_derivatives_boxplot(self, iterations=100, noise_std=0.01):
         """
