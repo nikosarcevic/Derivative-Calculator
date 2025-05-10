@@ -100,7 +100,7 @@ class HybridDerivativeCalculator:
         Calculates the derivative of a function at a given central value using
         the five-point stencil method.
 
-        Supports first, second, and third derivatives.
+        Supports first and second derivatives.
 
         Returns:
             float: the five-point stencil derivative.
@@ -142,7 +142,7 @@ class HybridDerivativeCalculator:
 
             left = (f0 - f_minus) / delta
             right = (f_plus - f0) / delta
-            return abs(left - right) < tol
+            return np.all(np.abs(left - right) < tol)
 
         except (ValueError, TypeError, ArithmeticError):
             return False
@@ -165,21 +165,24 @@ class HybridDerivativeCalculator:
 
         for _ in range(iterations):
             def noisy_func(x, func=self.function):
-                return func(x) + np.random.randn(1)[0] * noise_std
+                return func(x) + np.random.randn() * noise_std
 
             original_func = self.function
             self.function = noisy_func
+            derivative = np.nan  # Declare here for linter happiness
 
             try:
-                if method == 'stem':
-                    derivative = self.stem_method()
-                elif method == 'five_point_stencil':
-                    derivative = self.five_point_stencil_method()
-                else:
-                    raise ValueError("Invalid method. Choose 'stem' or 'five_point_stencil'.")
+                try:
+                    if method == 'stem':
+                        derivative = self.stem_method()
+                    elif method == 'five_point_stencil':
+                        derivative = self.five_point_stencil_method()
+                    else:
+                        raise ValueError("Invalid method. Choose 'stem' or 'five_point_stencil'.")
+                except Exception as e:
+                    self._log_debug_message(f"[calculate_derivatives_with_output_noise] Derivative failed: {e}")
+                    # derivative already set to nan
             finally:
-                self.function = original_func  # always restore
+                self.function = original_func
 
             derivatives.append(derivative)
-
-        return derivatives
