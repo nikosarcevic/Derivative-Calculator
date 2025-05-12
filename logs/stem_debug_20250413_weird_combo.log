@@ -30,3 +30,17 @@
 [stem_method] Converged with spread 1.7882e-03
 [stem_method] Function not smooth around x_center; excluding 0% offset.
 [stem_method] Did not converge; using fallback.
+[stem_method] Function not smooth or differentiable at x_center; excluding 0% offset.
+[stem_method] Did not converge; using fallback.
+[stem_method] Converged with spread 5.4124e-03
+[stem_method] Converged with spread 8.4433e-03
+[stem_method] Converged with spread 1.7882e-03
+[stem_method] Function not smooth or differentiable at x_center; excluding 0% offset.
+[stem_method] Did not converge; using fallback.
+[stem_method] Function not smooth or differentiable at central_value; excluding 0% offset.
+[stem_method] Did not converge; using fallback.
+[stem_method] Converged with spread 5.4124e-03
+[stem_method] Converged with spread 8.4433e-03
+[stem_method] Converged with spread 1.7882e-03
+[stem_method] Function not smooth or differentiable at central_value; excluding 0% offset.
+[stem_method] Did not converge; using fallback.
