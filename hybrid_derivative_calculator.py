@@ -1,7 +1,8 @@
 from datetime import datetime
-import numpy as np
 import os
 import warnings
+
+import numpy as np
 
 
 class HybridDerivativeCalculator:
@@ -46,7 +47,7 @@ class HybridDerivativeCalculator:
 
     def stem_method(self, include_zero=True, fallback=True, debug=True):
         """
-        Estimate the 1st, 2nd, or 3rd derivative using iterative polynomial fitting.
+        Estimate the 1st or 2nd order derivative using iterative polynomial fitting.
 
         Returns:
             float: Estimated derivative at central_value.
