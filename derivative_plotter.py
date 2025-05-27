@@ -1,7 +1,9 @@
+import os
+
 import matplotlib.pyplot as plt
 import numdifftools as nd
 import numpy as np
-import os
+
 from hybrid_derivative_calculator import HybridDerivativeCalculator
 
 
