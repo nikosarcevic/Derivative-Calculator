@@ -1,7 +1,7 @@
 from datetime import datetime
 import os
 import warnings
-
+import numba as nb
 import numpy as np
 
 
@@ -71,22 +71,14 @@ class HybridDerivativeCalculator:
         y_values = np.array([self.function(x) for x in x_values])
 
         while len(x_values) >= max(self.min_samples, self.derivative_order + 2):
-            coeffs = np.polyfit(x_values, y_values, deg=self.derivative_order)
-            poly = np.poly1d(coeffs)
-            y_fit = poly(x_values)
-
-            safe_y = np.where(y_values == 0, 1e-10, y_values)
-            spread = np.abs((y_fit - y_values) / safe_y)
-            max_spread = np.max(spread)
-
+            coeffs = polyfit(x_values, y_values, self.derivative_order)
+            max_spread = compute_spread(x_values, y_values, coeffs)
             if max_spread < self.stem_precision:
                 if debug:
                     msg = f"[stem_method] Converged with spread {max_spread:.4e}"
                     self._log_debug_message(msg)
-
                 # Return appropriate derivative at central_value
-                poly_deriv = poly.deriv(m=self.derivative_order)
-                return float(poly_deriv(self.central_value))
+                return poly_derivative(np.atleast_1d(self.central_value), coeffs, self.derivative_order)[0]
 
             x_values = x_values[1:-1]
             y_values = y_values[1:-1]
@@ -187,3 +179,36 @@ class HybridDerivativeCalculator:
                 self.function = original_func
 
             derivatives.append(derivative)
+
+@nb.njit
+def poly_derivative(x_values, coeffs, deriv_order):
+    mat = np.zeros((x_values.shape[0], len(coeffs)))
+    for i in range(mat.shape[1]):
+        if i < deriv_order:
+            mat[:, i] = 0
+        else:
+            mat[:, i] = x_values**(i - deriv_order) * np.prod(i - np.arange(0, deriv_order))
+    return mat @ coeffs
+    
+
+@nb.njit
+def poly_mat(x_values, deg):
+    mat = np.zeros((x_values.shape[0], deg + 1))
+    for i in range(mat.shape[1]):
+        mat[:,i] = x_values**i
+    return mat
+
+
+@nb.njit
+def polyfit(x_values, y_values, deg):
+    mat = poly_mat(x_values, deg)
+    coeffs, _, _, _ = np.linalg.lstsq(mat, y_values)
+    return coeffs
+
+
+@nb.njit
+def compute_spread(x_values, y_values, fit_coeff):
+    y_fit = poly_mat(x_values, len(fit_coeff) - 1) @ fit_coeff
+    safe_y = np.maximum(1e-10, y_values)
+    max_spread = np.max(np.abs((y_fit - y_values) / safe_y))
+    return max_spread
