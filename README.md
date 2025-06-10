@@ -1,125 +1,188 @@
+# derivkit
 
+> A robust Python toolkit for estimating derivatives using the STEM method and the five-point stencil method.
+> Designed for stability, speed, and noise resilience—ideal for cosmology and other scientific computing tasks.
 
-***
-## Table of contents
-- [Derivative Calculator](#derivative-calculator)
-  * [Basic information and motivation](#basic-information-and-motivation)
-  * [The Power of Stem Method](#the-power-of-stem-method)
-  * [Features](#features)
-  * [Installation](#installation)
-  * [Usage](#usage)
-  * [License](#license)
-  * [Contributors and Thanks](#contributors-and-thanks)
-  * [Contributing](#contributing)
+---
 
+## Table of Contents
 
-***
-# Derivative Calculator
+- [Overview and Motivation](#overview-and-motivation)
+- [How the STEM Method Works](#how-the-stem-method-works)
+- [Why Use This Package](#why-use-this-package)
+- [Notebooks and Examples](#notebooks-and-examples)
+- [Benchmark: STEM vs. Stencil](#benchmark-stem-vs-stencil)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Directory Structure](#directory-structure)
+- [License](#license)
+- [Contributors and Thanks](#contributors-and-thanks)
 
-## Basic information and motivation
+---
 
-The DerivativeCalculator class in this Python module is specifically tailored for accurately computing the derivative of functions at a designated point, utilizing the **stem method** explained in Camera et al. 2016 *"SKA Weak Lensing III: Added Value of Multi-Wavelength Synergies for the Mitigation of Systematics"* ([see arXiv:1606.03451
-](https://arxiv.org/abs/1606.03451)). It also features a five-point stencil method (used to showcase the superorority of the stem method), along with tools for demonstrating the method visually.
+## Overview and Motivation
 
-The motivation behind this code is rooted in addressing challenges in calculating derivatives within Fisher forecasting analysis (or any other occurance where the sability of numerical derivatives is central). Given the intricate nature of the functions involved, often accompanied by substantial noise, precise derivative computation becomes critical. The complexity of these functions, coupled with the difficulty in determining ideal derivative step sizes for various cosmological parameters, significantly impacts the stability of [Fisher matrices](https://en.wikipedia.org/wiki/Fisher_information). Traditional finite difference methods like the [five-point stencil](https://en.wikipedia.org/wiki/Five-point_stencil) or [numdifftools](https://numdifftools.readthedocs.io/en/master/) inadequate in such scenarios.
+`derivkit` provides robust numerical derivative estimates using the **STEM method**, an adaptive algorithm
+that improves derivative stability—particularly important when functions are noisy or irregular.
 
-The stem method emerges as a robust alternative, particularly effective when the original function is complex and sensitive to minor parameter adjustments. This sensitivity typically leads to high variability in the derivatives with respect to each parameter, especially when small changes are evaluated. To address this, determining a bespoke and optimal step size for each parameter's derivative is essential. Alternatively, the stem method provides a practical solution to these challenges.
+This is critical in applications such as **Fisher matrix forecasts** and **numerical likelihoods**, 
+where unstable or poorly estimated derivatives can corrupt cosmological parameter constraints.
 
-## The Power of Stem Method
+Alongside the STEM method, we provide the classic **five-point stencil method** for benchmarking,
+and tools for visualization and noise testing.
 
-The power of stem method lies in the fact that the derivative is obtained as follows:
- - first, the function is evaluated at a central value and several more values (arbitrary choice. We are following values given in Camera et al.)
- - these values are collected in an array (or a list) and then a linear fit is performed
- - if the slope is more than desired precision (for example, more than 10%), the outer points are "clipped off" and fitting is done again
- - this is done until the desired precision is met
- - the derivative is then the slope of the linear function.
+---
 
+## How the STEM Method Works
 
-A visual demonstration can be seen in figure:
+The **STEM (Stability-Enhanced Method)** derivative algorithm operates as follows:
 
-![A showcase of the idea behind the stem method: function is evaluated multiple times, each value (purple scatter) is plotted and then linearly fitted (green line). The derivative is then the slope of the linear function.](/plots/stem_demonstration.png)
+1. **Function Sampling**: It evaluates the target function at symmetric offsets around a central point.
+2. **Iterative Clipping**: It fits a polynomial through the sampled points and removes the points that most degrade the fit.
+3. **Polynomial Fit**: The slope of the final polynomial is taken as the estimated derivative.
+4. **Fallback Strategy**: If STEM fails (e.g., too noisy), it can revert to a safe finite-difference estimate.
 
-Derivative value evaluation using the stem method, compared to a finite difference method, such as five point stencil, is prefereed as the variance of the distribution of the derivatives (evaluted over some noisy data for example), will be extremely small. This can be seen in the histograms below:
-![A range of derivatives estimated with a five point stencil method (hot pink) and stem method (yellow green) for a cubic function with introduced noise and evaluated 1000 times. The spread in the stem method case is extremely small compared to the finite difference method. The small variance is preferrable when the stability of numerical derivatives is required, such as Fisher analyses and similar. Value of the derivative obtained using the numdifftools library is also displayed in the subplots.](/plots/derivation_comparison_hist.png)
+This approach is based on [Camera et al. (2016)](https://arxiv.org/abs/1606.03451) 
+and improves numerical stability especially under **noisy** or **non-smooth** function evaluations.
 
-Alternative way of demonstrating the difference in variance of the distribution of the derivatives for a five point stencil and stem method is a box plot:
-![Box plots for five point stencil (top) and stem methods (bottom) for a cubic function with gaussian noise.](/plots/derivation_comparison_boxplot.png)
+> STEM is particularly useful when you expect large noise fluctuations or non-analytic behavior in
+> your input function (e.g., from simulations or observational data).
 
-To generate the derivatives using the stem method, use an example notebook. The notebook also contains an example how to generate the above shown plots.
+---
 
-> [!NOTE]
-> Note that this implementation of the stem method routine is very simple and basic. Secondly, some choices (for example, the value of the deviations from the central value, the limit of the maximum spread, etc.) are arbitrary. It can be changed or improved depending on the purpose and the framework where it will be implemented.
+## Why Use This Package
 
-## Features
+- **Noise-resistant**: Performs better on non-analytic or noisy functions
+- **Configurable**: Tune thresholds, fitting order, or fallback methods  
+- **Modular**: Easy to extend or plug into inference pipelines  
+- **Fast**: Benchmarked for performance—STEM remains efficient even when adaptive  
+- **Compatible**: Works with scalar or vector-valued functions; supports reshaping
 
-**Stem Method**: Implements the stem derivative calculation based on the method developed by Camera et al.
-This method is described in detail in *"SKA Weak Lensing III: Added Value of Multi-Wavelength Synergies for the Mitigation of Systematics"* ([see arXiv:1606.03451
-](https://arxiv.org/abs/1606.03451)).
+---
 
-**Five-Point Stencil Method**: Provides a numerical differentiation using the five-point stencil method (for more details check [Wikipedia](https://en.wikipedia.org/wiki/Five-point_stencil), for example).
+## Notebooks and Examples
 
-**Handling Output Noise**: Includes functionality for adding Gaussian noise to the function output and calculating derivatives with this noise.
+We provide several Jupyter notebooks under `notebooks/`:
 
-**Visualization Tools**: Methods for plotting derivative distributions and demonstrating the stem method with noisy data.
+- `derivkit_example_usage.ipynb`: A quick-start guide showing STEM use on 1D and 2D functions.
+- `stem_vs_stencil_comparison.ipynb`: Visual comparison of STEM and stencil on noisy inputs.
+- `benchmark_stem_stencil.ipynb`: Benchmarks timing performance and includes a plot.
+- `logs/`: Contains debug logs from various function tests using STEM.
+- `plots/`: Contains output visualizations from histogram and boxplot comparisons.
+
+### Sample Figures
+
+**Visual demo of STEM behavior**:  
+![STEM method demo](notebooks/plots/stem_method_demo.png)
+
+**Histogram comparison with `numdifftools` baseline**:  
+![Histogram](notebooks/plots/derivation_comparison_hist.png)
+
+**Boxplot of distribution spread**:  
+![Boxplot](notebooks/plots/derivation_comparison_boxplot.png)
+
+---
+
+## Benchmark: STEM vs. Stencil
+
+We test the time cost of each method on functions with increasing evaluation time:
+
+![Timing](notebooks/plots/benchmark_stem_stencil_timing.png)
+
+> 🔎 **Conclusion**: STEM adds negligible overhead even on slow functions (up to 2s per call). 
+> Its increased stability makes it the better choice when derivative quality matters.
+
+---
 
 ## Installation
 
-To use the DerivativeCalculator, you need to have Python installed along with the following libraries:
+Clone and install locally:
 
-- NumPy
-- Matplotlib
-- Seaborn
-- Numdifftools
-- SciPy
+```bash
+git clone https://github.com/nikosarcevic/derivkit.git
+cd derivkit
+pip install -e .
+```
 
-You can install these dependencies using pip:
 
-bash
-```pip install numpy matplotlib seaborn numdifftools scipy```
+## Dependencies
+```bash
+pip install numpy matplotlib seaborn numdifftools scipy
+```
+
 
 ## Usage
-
-Here is a basic example of how to use the DerivativeCalculator:
-
-python
-```
+```python
 import numpy as np
-from derivative_calculator import DerivativeCalculator
-```
+from derivkit.hybrid import HybridDerivativeCalculator
 
-Define your function
-```
+
+# Define a simple function
 def my_function(x):
-return np.sin(x)
+    return np.array([np.sin(x)])
+
+# Initialize the calculator
+calc = HybridDerivativeCalculator(
+    function=my_function,
+    central_value=np.pi / 4,
+    derivative_order=1
+)
+
+# Compute the derivatives
+stem_result = calc.stem_method()
+stencil_result = calc.five_point_stencil_method()
+
+print("STEM method derivative:", stem_result)
+print("Five-point stencil derivative:", stencil_result)
+
 ```
 
-Create an instance of the DerivativeCalculator
-```
-calc = DerivativeCalculator(myfunc=my_function, x_center=np.pi/4)
+### Note on Vector Outputs
+
+If your function returns a 2D array (e.g., shape `[n_x, n_y]`, such as a 2D data vector of angular power spectra in cosmology),  
+make sure to **flatten it** before passing it into the calculator.
+
+The internal logic assumes each function evaluation returns a **1D array**, so you'll want to wrap your function like this:
+
+```python
+def wrapped_func(x):
+    return original_func(x).flatten()
+# After computing the derivative, you can reshape it back for interpretability:
+flat_deriv = calc.stem_method()
+reshaped = flat_deriv.reshape(n_x, n_y)
 ```
 
-Calculate the derivative using the stem method
-```
-stem_derivative = calc.stem_method()
-print("Stem Method Derivative:", stem_derivative)
-```
+## Directory Structure
 
-Calculate the derivative using the five-point stencil method
 ```
-stencil_derivative = calc.five_point_stencil_method()
-print("Five-Point Stencil Derivative:", stencil_derivative)
+derivkit/
+├── derivkit/
+│   ├── __init__.py
+│   ├── hybrid.py           # STEM and stencil logic
+│   ├── plotter.py          # Plotting and comparison visuals
+├── notebooks/
+│   ├── derivkit_example_usage.ipynb
+│   ├── stem_vs_stencil_comparison.ipynb
+│   ├── benchmark_stem_stencil.ipynb
+│   ├── plots/              # Histogram, boxplot, timing figures
+│   └── logs/               # Debug logs from STEM method
+├── setup.py
+├── pyproject.toml
+├── LICENSE
+└── README.md
+
 ```
 
 ## License
-
-MIT License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contributors and Thanks
 
-This repository is maintained by Niko Sarcevic and Matthijs van der Wild.
-Thank you to Stefano Camera for the method, and Matthijs van der Wild and Marco Bonici for useful discussions and tips.
+This project was inspired by the work of [Camera et al. (2016)](https://arxiv.org/abs/1606.03451) 
+and is developed and maintained by **Niko Šarčević** and **Matthijs van der Wild**.
+
+**Contributors**:  
+Bastian Carreres, Matthew Fieckerit, Knut Morå.
 
 
-## Contributing
 
-Contributions to improve DerivativeCalculator are welcome. Please ensure to follow the code standards and add unit tests for any new features.
