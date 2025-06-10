@@ -31,9 +31,11 @@ release = '0.1.0'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.napoleon',
-    'myst_nb',
+    # "myst_parser",
+    "myst_nb",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+    "sphinx_rtd_theme",
 ]
 
 
@@ -64,3 +66,7 @@ source_suffix = {
     '.rst': 'restructuredtext',
     '.md': 'markdown',
 }
+
+nb_execution_mode = "off"
+#nb_execution_timeout = 120  # or more, in seconds
+
